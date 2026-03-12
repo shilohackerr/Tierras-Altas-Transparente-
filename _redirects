@@ -1,0 +1,7 @@
+# Tierras Altas Transparente — Netlify Redirects
+# Panel admin solo accesible con ruta directa
+/admin  /admin/index.html  200
+/admin/ /admin/index.html  200
+
+# SPA fallback
+/*  /index.html  200
