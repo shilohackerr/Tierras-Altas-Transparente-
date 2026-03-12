@@ -15,11 +15,11 @@ const PRESUPUESTO = {
       { nombre: 'Río Sereno',    recibidoPct: 65, ejecutadoPct: 55 },
     ],
     rubros: [
-      { nombre: '🛣️ Infraestructura Vial', pct: 72, color: '#4a9465' },
-      { nombre: '💧 Agua y Saneamiento',   pct: 45, color: '#1a5276' },
-      { nombre: '🌿 Ambiente y Parques',   pct: 88, color: '#4a9465' },
-      { nombre: '🏫 Educación y Cultura',  pct: 31, color: '#d4ac0d' },
-      { nombre: '💡 Alumbrado Público',    pct: 18, color: '#c0392b' },
+      { nombre: '🛣️ Infraestructura Vial', pct: 72, color: '#00e64d' },
+      { nombre: '💧 Agua y Saneamiento',   pct: 45, color: '#2563eb' },
+      { nombre: '🌿 Ambiente y Parques',   pct: 88, color: '#00b83d' },
+      { nombre: '🏫 Educación y Cultura',  pct: 31, color: '#f6c90e' },
+      { nombre: '💡 Alumbrado Público',    pct: 18, color: '#e53e3e' },
     ]
   },
   volcan:       { recibido: 820000, ejecutado: 508400, proceso: 180000, saldo: 131600 },

@@ -116,8 +116,8 @@ function renderBarChart(correg) {
   container.innerHTML = data.map(c => `
     <div class="bar-group">
       <div class="bar-wrap">
-        <div class="bar" style="height:${c.recibidoPct}%; background:var(--verde-claro);" title="${c.nombre}: Recibido ${c.recibidoPct}%"></div>
-        <div class="bar" style="height:${c.ejecutadoPct}%; background:var(--oro-chiricano);" title="${c.nombre}: Ejecutado ${c.ejecutadoPct}%"></div>
+        <div class="bar" style="height:${c.recibidoPct}%; background:var(--azul-cielo);" title="${c.nombre}: Recibido ${c.recibidoPct}%"></div>
+        <div class="bar" style="height:${c.ejecutadoPct}%; background:var(--verde-neon);" title="${c.nombre}: Ejecutado ${c.ejecutadoPct}%"></div>
       </div>
       <div class="bar-label">${c.nombre}</div>
     </div>
@@ -233,7 +233,7 @@ function initMapa() {
   `;
 
   // Colores de estado
-  const colorMap = { finalizado: '#4a9465', construccion: '#d4ac0d', detenido: '#c0392b' };
+  const colorMap = { finalizado: '#00e64d', construccion: '#f6c90e', detenido: '#e53e3e' };
   const iconMap  = { finalizado: '✓', construccion: '⚒', detenido: '!' };
 
   // Agregar pines
