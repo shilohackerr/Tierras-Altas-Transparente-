@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Panel Administrativo — Tierras Altas Transparente</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-body">
+
+  <!-- LOGIN SCREEN -->
+  <div class="admin-login" id="adminLogin">
+    <div class="login-card">
+      <div class="login-logo">
+        <div class="nav-escudo">TA</div>
+        <div>
+          <div class="login-title">Panel Administrativo</div>
+          <div class="login-sub">Tierras Altas Transparente · Solo Funcionarios</div>
+        </div>
+      </div>
+      <div class="login-warning">
+        🔒 Acceso restringido. Solo personal autorizado de la Alcaldía Municipal de Tierras Altas.
+      </div>
+      <div class="login-form">
+        <div class="lf-group">
+          <label class="lf-label" for="admin-user">Usuario Institucional</label>
+          <input class="lf-input" type="text" id="admin-user" placeholder="usuario@tierrasaltas.gob.pa" autocomplete="username">
+        </div>
+        <div class="lf-group">
+          <label class="lf-label" for="admin-pass">Contraseña</label>
+          <input class="lf-input" type="password" id="admin-pass" placeholder="••••••••" autocomplete="current-password">
+        </div>
+        <div class="lf-error" id="login-error"></div>
+        <button class="lf-btn" onclick="adminLogin()">🔐 Ingresar al Panel</button>
+        <a href="../index.html" class="lf-back">← Volver al sitio público</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN DASHBOARD -->
+  <div class="admin-dashboard" id="adminDashboard" style="display:none">
+
+    <!-- SIDEBAR -->
+    <aside class="admin-sidebar" id="adminSidebar">
+      <div class="sidebar-brand">
+        <div class="nav-escudo sm">TA</div>
+        <div class="sidebar-brand-text">
+          <span class="sb-title">Admin Panel</span>
+          <span class="sb-sub">Tierras Altas</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Menú de administración">
+        <div class="sidebar-section-label">Principal</div>
+        <a class="sidebar-link active" href="#" onclick="showTab('dashboard', this)" data-tab="dashboard">
+          <span class="sl-icon">📊</span> Dashboard
+        </a>
+        <a class="sidebar-link" href="#" onclick="showTab('presupuesto', this)" data-tab="presupuesto">
+          <span class="sl-icon">💰</span> Presupuesto
+        </a>
+        <a class="sidebar-link" href="#" onclick="showTab('proyectos', this)" data-tab="proyectos">
+          <span class="sl-icon">🏗️</span> Proyectos
+        </a>
+
+        <div class="sidebar-section-label">Ciudadanía</div>
+        <a class="sidebar-link" href="#" onclick="showTab('propuestas', this)" data-tab="propuestas">
+          <span class="sl-icon">💡</span> Propuestas
+          <span class="sl-badge" id="badge-propuestas">4</span>
+        </a>
+        <a class="sidebar-link" href="#" onclick="showTab('quejas', this)" data-tab="quejas">
+          <span class="sl-icon">🚨</span> Quejas 311
+          <span class="sl-badge red" id="badge-quejas">2</span>
+        </a>
+        <a class="sidebar-link" href="#" onclick="showTab('tramites', this)" data-tab="tramites">
+          <span class="sl-icon">📋</span> Trámites
+        </a>
+
+        <div class="sidebar-section-label">Rendición</div>
+        <a class="sidebar-link" href="#" onclick="showTab('promesas', this)" data-tab="promesas">
+          <span class="sl-icon">✅</span> Promesas
+        </a>
+        <a class="sidebar-link" href="#" onclick="showTab('usuarios', this)" data-tab="usuarios">
+          <span class="sl-icon">👥</span> Usuarios Admin
+        </a>
+
+        <div class="sidebar-divider"></div>
+        <a class="sidebar-link" href="../index.html" target="_blank">
+          <span class="sl-icon">🌐</span> Ver Sitio Público
+        </a>
+        <a class="sidebar-link danger" href="#" onclick="adminLogout()">
+          <span class="sl-icon">🚪</span> Cerrar Sesión
+        </a>
+      </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="admin-main" id="adminMain">
+
+      <!-- TOP BAR -->
+      <header class="admin-topbar">
+        <div class="topbar-left">
+          <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Alternar menú">☰</button>
+          <div class="topbar-breadcrumb" id="topbarBreadcrumb">Dashboard</div>
+        </div>
+        <div class="topbar-right">
+          <div class="topbar-date" id="topbarDate"></div>
+          <div class="admin-avatar" title="Funcionario activo">A</div>
+        </div>
+      </header>
+
+      <!-- TAB: DASHBOARD -->
+      <div class="admin-tab" id="tab-dashboard">
+        <div class="tab-header">
+          <h1 class="tab-title">Dashboard General</h1>
+          <p class="tab-sub">Resumen de actividad de la plataforma en tiempo real.</p>
+        </div>
+
+        <div class="admin-kpi-grid">
+          <div class="admin-kpi"><div class="akpi-num">B/.2.43M</div><div class="akpi-label">Presupuesto Total</div><div class="akpi-sub">47.3% ejecutado</div></div>
+          <div class="admin-kpi"><div class="akpi-num">18</div><div class="akpi-label">Proyectos Activos</div><div class="akpi-sub">5 en construcción</div></div>
+          <div class="admin-kpi orange"><div class="akpi-num">4</div><div class="akpi-label">Propuestas Pendientes</div><div class="akpi-sub">Requieren revisión</div></div>
+          <div class="admin-kpi red"><div class="akpi-num">2</div><div class="akpi-label">Quejas Sin Asignar</div><div class="akpi-sub">Prioridad alta</div></div>
+        </div>
+
+        <div class="admin-row">
+          <div class="admin-card half">
+            <div class="ac-title">📋 Actividad Reciente</div>
+            <div class="activity-list">
+              <div class="activity-item"><span class="ai-dot green"></span><div><div class="ai-text">OC-2026-0043 aprobada por Contraloría</div><div class="ai-time">Hace 2h</div></div></div>
+              <div class="activity-item"><span class="ai-dot orange"></span><div><div class="ai-text">Propuesta nueva: "Centro Reciclaje Volcán"</div><div class="ai-time">Hace 4h</div></div></div>
+              <div class="activity-item"><span class="ai-dot red"></span><div><div class="ai-text">Queja #TAQ-2026-1038 sin asignar (Día 3)</div><div class="ai-time">Hace 6h</div></div></div>
+              <div class="activity-item"><span class="ai-dot green"></span><div><div class="ai-text">Proyecto "Cancha Río Sereno" marcado Finalizado</div><div class="ai-time">Ayer</div></div></div>
+              <div class="activity-item"><span class="ai-dot blue"></span><div><div class="ai-text">287 votos en propuesta de alumbrado</div><div class="ai-time">Ayer</div></div></div>
+            </div>
+          </div>
+          <div class="admin-card half">
+            <div class="ac-title">⚡ Acciones Rápidas</div>
+            <div class="quick-actions">
+              <button class="qa-btn" onclick="showTab('presupuesto', document.querySelector('[data-tab=presupuesto]'))">💰 Actualizar Datos Presupuestales</button>
+              <button class="qa-btn" onclick="showTab('proyectos', document.querySelector('[data-tab=proyectos]'))">🏗️ Actualizar Estado de Proyectos</button>
+              <button class="qa-btn orange" onclick="showTab('propuestas', document.querySelector('[data-tab=propuestas]'))">💡 Revisar 4 Propuestas Pendientes</button>
+              <button class="qa-btn red" onclick="showTab('quejas', document.querySelector('[data-tab=quejas]'))">🚨 Asignar Quejas Urgentes (2)</button>
+              <button class="qa-btn" onclick="showTab('promesas', document.querySelector('[data-tab=promesas]'))">✅ Actualizar Promesas de Gestión</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: PRESUPUESTO -->
+      <div class="admin-tab" id="tab-presupuesto" style="display:none">
+        <div class="tab-header">
+          <h1 class="tab-title">Gestión de Presupuesto</h1>
+          <p class="tab-sub">Actualiza los datos de IBI, PIOPS y ejecución por corregimiento.</p>
+        </div>
+        <div class="admin-card">
+          <div class="ac-title">📥 Carga de Datos — Fuente: Autoridad Nacional de Descentralización</div>
+          <div class="import-zone">
+            <div class="import-icon">📊</div>
+            <p>Arrastra o selecciona el archivo CSV/Excel exportado desde el portal AND</p>
+            <p class="import-sub">Formatos: .csv, .xlsx, .json · Actualización automática al cargar</p>
+            <button class="import-btn">Seleccionar Archivo</button>
+          </div>
+        </div>
+
+        <div class="admin-card">
+          <div class="ac-title">✏️ Actualización Manual de Totales</div>
+          <div class="admin-form-grid">
+            <div class="af-group">
+              <label class="af-label">Total Recibido IBI + PIOPS (B/.)</label>
+              <input class="af-input" type="number" value="2430000">
+            </div>
+            <div class="af-group">
+              <label class="af-label">Total Ejecutado (B/.)</label>
+              <input class="af-input" type="number" value="1148400">
+            </div>
+            <div class="af-group">
+              <label class="af-label">En Proceso de Ejecución (B/.)</label>
+              <input class="af-input" type="number" value="680000">
+            </div>
+            <div class="af-group">
+              <label class="af-label">Año Fiscal</label>
+              <select class="af-select"><option>2026</option><option>2025</option></select>
+            </div>
+          </div>
+          <button class="af-submit" onclick="alert('Datos actualizados. Los cambios se reflejan en el sitio público.')">💾 Guardar y Publicar</button>
+        </div>
+      </div>
+
+      <!-- TAB: PROYECTOS -->
+      <div class="admin-tab" id="tab-proyectos" style="display:none">
+        <div class="tab-header-row">
+          <div>
+            <h1 class="tab-title">Gestión de Proyectos</h1>
+            <p class="tab-sub">Actualiza estado, fotos y ficha técnica de cada proyecto.</p>
+          </div>
+          <button class="btn-add" onclick="alert('Formulario de nuevo proyecto')">+ Nuevo Proyecto</button>
+        </div>
+
+        <div class="admin-card">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Proyecto</th>
+                <th>Zona</th>
+                <th>Estado</th>
+                <th>Monto</th>
+                <th>Contratista</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="adminProyectosTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB: PROPUESTAS -->
+      <div class="admin-tab" id="tab-propuestas" style="display:none">
+        <div class="tab-header">
+          <h1 class="tab-title">Propuestas Ciudadanas</h1>
+          <p class="tab-sub">Revisa, aprueba o rechaza propuestas para incluirlas en agenda del Consejo Municipal.</p>
+        </div>
+
+        <div class="admin-card">
+          <div class="propuestas-admin-list" id="propuestasAdminList"></div>
+        </div>
+      </div>
+
+      <!-- TAB: QUEJAS -->
+      <div class="admin-tab" id="tab-quejas" style="display:none">
+        <div class="tab-header">
+          <h1 class="tab-title">Gestión de Quejas 311</h1>
+          <p class="tab-sub">Asigna reportes a cuadrillas y actualiza el estado de cada ticket.</p>
+        </div>
+
+        <div class="admin-card">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Código</th>
+                <th>Tipo</th>
+                <th>Lugar</th>
+                <th>Estado</th>
+                <th>Fecha</th>
+                <th>Asignar a</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody id="adminQuejasTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB: TRÁMITES -->
+      <div class="admin-tab" id="tab-tramites" style="display:none">
+        <div class="tab-header">
+          <h1 class="tab-title">Gestión de Trámites</h1>
+          <p class="tab-sub">Consulta solicitudes en línea y gestiona pagos pendientes.</p>
+        </div>
+        <div class="admin-card">
+          <div class="ac-title">📋 Solicitudes Recientes</div>
+          <table class="admin-table">
+            <thead><tr><th>Tipo</th><th>Ciudadano</th><th>Fecha</th><th>Estado Pago</th><th>Acción</th></tr></thead>
+            <tbody>
+              <tr><td>Paz y Salvo</td><td>J. Martínez (8-724-321)</td><td>11 mar 2026</td><td><span class="estado-badge green">Pagado</span></td><td><button class="tbtn" onclick="alert('Documento generado')">Generar Doc</button></td></tr>
+              <tr><td>Licencia Comercial</td><td>R. González (4-112-567)</td><td>10 mar 2026</td><td><span class="estado-badge orange">Pendiente</span></td><td><button class="tbtn" onclick="alert('Verificando pago...')">Verificar</button></td></tr>
+              <tr><td>Permiso Construcción</td><td>M. Ábrego (8-803-999)</td><td>9 mar 2026</td><td><span class="estado-badge green">Pagado</span></td><td><button class="tbtn">Aprobar</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB: PROMESAS -->
+      <div class="admin-tab" id="tab-promesas" style="display:none">
+        <div class="tab-header">
+          <h1 class="tab-title">Rendición de Cuentas</h1>
+          <p class="tab-sub">Actualiza el porcentaje de cumplimiento de cada promesa de gestión.</p>
+        </div>
+        <div class="admin-card">
+          <div class="promesas-admin-list" id="promesasAdminList"></div>
+          <button class="af-submit" style="margin-top:1.5rem" onclick="alert('Cambios guardados y publicados en el sitio.')">💾 Guardar y Publicar Cambios</button>
+        </div>
+      </div>
+
+      <!-- TAB: USUARIOS -->
+      <div class="admin-tab" id="tab-usuarios" style="display:none">
+        <div class="tab-header-row">
+          <div>
+            <h1 class="tab-title">Usuarios Administrativos</h1>
+            <p class="tab-sub">Gestiona el acceso de funcionarios al panel.</p>
+          </div>
+          <button class="btn-add" onclick="alert('Formulario de nuevo usuario')">+ Nuevo Usuario</button>
+        </div>
+        <div class="admin-card">
+          <table class="admin-table">
+            <thead><tr><th>Nombre</th><th>Email</th><th>Rol</th><th>Último Acceso</th><th>Estado</th><th>Acción</th></tr></thead>
+            <tbody>
+              <tr><td>Admin Principal</td><td>admin@tierrasaltas.gob.pa</td><td><span class="rol-badge">Superadmin</span></td><td>Hoy, 8:32am</td><td><span class="estado-badge green">Activo</span></td><td><button class="tbtn">Editar</button></td></tr>
+              <tr><td>Rosa Prescott</td><td>r.prescott@tierrasaltas.gob.pa</td><td><span class="rol-badge blue">Editor</span></td><td>Ayer</td><td><span class="estado-badge green">Activo</span></td><td><button class="tbtn">Editar</button></td></tr>
+              <tr><td>Carlos Ábrego</td><td>c.abrego@tierrasaltas.gob.pa</td><td><span class="rol-badge gray">Visor</span></td><td>5 mar 2026</td><td><span class="estado-badge orange">Inactivo</span></td><td><button class="tbtn">Editar</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    /* ── LOGIN ── */
+    function adminLogin() {
+      const user = document.getElementById('admin-user').value;
+      const pass = document.getElementById('admin-pass').value;
+      const err  = document.getElementById('login-error');
+
+      // Demo: cualquier usuario/contraseña no vacíos
+      if (!user || !pass) {
+        err.textContent = 'Ingresa tu usuario y contraseña.';
+        err.style.display = 'block';
+        return;
+      }
+      // En producción: autenticación real contra backend seguro
+      document.getElementById('adminLogin').style.display = 'none';
+      document.getElementById('adminDashboard').style.display = 'flex';
+      document.getElementById('topbarDate').textContent = new Date().toLocaleDateString('es-PA', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+      initAdminData();
+    }
+
+    document.getElementById('admin-pass').addEventListener('keydown', e => {
+      if (e.key === 'Enter') adminLogin();
+    });
+
+    function adminLogout() {
+      if (confirm('¿Cerrar sesión del panel administrativo?')) {
+        document.getElementById('adminDashboard').style.display = 'none';
+        document.getElementById('adminLogin').style.display   = 'flex';
+        document.getElementById('admin-user').value = '';
+        document.getElementById('admin-pass').value = '';
+      }
+    }
+
+    /* ── TABS ── */
+    function showTab(tabName, link) {
+      document.querySelectorAll('.admin-tab').forEach(t => t.style.display = 'none');
+      document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+      document.getElementById('tab-' + tabName).style.display = 'block';
+      if (link) link.classList.add('active');
+      document.getElementById('topbarBreadcrumb').textContent =
+        link ? link.textContent.trim().replace(/^\S+\s/, '') : tabName;
+    }
+
+    function toggleSidebar() {
+      document.getElementById('adminSidebar').classList.toggle('collapsed');
+    }
+
+    /* ── DATOS ── */
+    function initAdminData() {
+      renderAdminProyectos();
+      renderAdminQuejas();
+      renderAdminPropuestas();
+      renderAdminPromesas();
+    }
+
+    const PROYECTOS_DATA = [
+      { nombre: 'Pavimentación Calle Principal', zona: 'Volcán',        estado: 'finalizado',  monto: 'B/.145,000', empresa: 'Const. Chiriquí S.A.' },
+      { nombre: 'Mejora Acueducto',              zona: 'Cerro Punta',   estado: 'construccion',monto: 'B/.87,500',  empresa: 'HidroAndes S.A.'     },
+      { nombre: 'Ampliación Mercado Municipal',  zona: 'C. Piedra',     estado: 'detenido',    monto: 'B/.210,000', empresa: 'Sin adjudicar'        },
+      { nombre: 'Cancha Multipropósito',         zona: 'Río Sereno',    estado: 'finalizado',  monto: 'B/.110,000', empresa: 'Deportivo Bocas S.A.' },
+      { nombre: 'Aceras Accesibles',             zona: 'Paso Ancho',    estado: 'construccion',monto: 'B/.42,000',  empresa: 'Pavimentos del Sur'   },
+    ];
+
+    function renderAdminProyectos() {
+      const t = document.getElementById('adminProyectosTable');
+      if (!t) return;
+      const estadoColors = { finalizado:'green', construccion:'orange', detenido:'red' };
+      const estadoLabels = { finalizado:'Finalizado', construccion:'En Construcción', detenido:'Detenido' };
+      t.innerHTML = PROYECTOS_DATA.map(p => `
+        <tr>
+          <td><strong>${p.nombre}</strong></td>
+          <td>${p.zona}</td>
+          <td><span class="estado-badge ${estadoColors[p.estado]}">${estadoLabels[p.estado]}</span></td>
+          <td>${p.monto}</td>
+          <td>${p.empresa}</td>
+          <td>
+            <button class="tbtn" onclick="alert('Editando: ${p.nombre}')">✏️ Editar</button>
+            <button class="tbtn" onclick="alert('Subir fotos para: ${p.nombre}')">📸 Fotos</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    const QUEJAS_DATA = [
+      { codigo:'#TAQ-2026-1041', tipo:'Luminaria', lugar:'Volcán, Av. Principal', estado:'resuelto', fecha:'6 mar' },
+      { codigo:'#TAQ-2026-1038', tipo:'Bache',     lugar:'Paso Ancho, C. 2da',   estado:'proceso',  fecha:'8 mar' },
+      { codigo:'#TAQ-2026-1035', tipo:'Tubería',   lugar:'Cerro Punta, S4',       estado:'proceso',  fecha:'6 mar' },
+      { codigo:'#TAQ-2026-1029', tipo:'Árbol',     lugar:'Río Sereno, Camino',    estado:'abierto',  fecha:'10 mar'},
+    ];
+
+    function renderAdminQuejas() {
+      const t = document.getElementById('adminQuejasTable');
+      if (!t) return;
+      const cuadrillas = ['Cuadrilla Norte','Cuadrilla Sur','Cuadrilla Centro','Cuadrilla Este'];
+      const estadoColors = { resuelto:'green', proceso:'blue', abierto:'red' };
+      const estadoLabels = { resuelto:'Resuelto', proceso:'En Proceso', abierto:'Sin Asignar' };
+      t.innerHTML = QUEJAS_DATA.map(q => `
+        <tr>
+          <td><code>${q.codigo}</code></td>
+          <td>${q.tipo}</td>
+          <td>${q.lugar}</td>
+          <td><span class="estado-badge ${estadoColors[q.estado]}">${estadoLabels[q.estado]}</span></td>
+          <td>${q.fecha}</td>
+          <td>
+            <select class="af-select sm" onchange="alert('Asignado a: '+this.value)">
+              <option value="">Asignar...</option>
+              ${cuadrillas.map(c => `<option>${c}</option>`).join('')}
+            </select>
+          </td>
+          <td>
+            <button class="tbtn" onclick="alert('Estado actualizado para ${q.codigo}')">Actualizar</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    const PROPUESTAS_ADMIN = [
+      { id:'PA1', nombre:'Alumbrado LED Barrio Las Flores', zona:'Volcán',      votos:287, cedula:'8-XXX-XXX', estado:'pendiente' },
+      { id:'PA2', nombre:'Centro de Acopio de Residuos',   zona:'Cerro Punta', votos:224, cedula:'6-XXX-XXX', estado:'pendiente' },
+      { id:'PA3', nombre:'Reparación Puente Peatonal',     zona:'Paso Ancho',  votos:179, cedula:'8-XXX-XXX', estado:'aprobada'  },
+      { id:'PA4', nombre:'Biblioteca Comunitaria Digital', zona:'Río Sereno',  votos:134, cedula:'4-XXX-XXX', estado:'pendiente' },
+    ];
+
+    function renderAdminPropuestas() {
+      const c = document.getElementById('propuestasAdminList');
+      if (!c) return;
+      c.innerHTML = PROPUESTAS_ADMIN.map(p => `
+        <div class="propuesta-admin-card">
+          <div class="pac-header">
+            <div>
+              <div class="pac-nombre">${p.nombre}</div>
+              <div class="pac-meta">${p.zona} · ${p.votos} votos · Cédula verificada: ${p.cedula}</div>
+            </div>
+            <span class="estado-badge ${p.estado === 'aprobada' ? 'green' : 'orange'}">${p.estado === 'aprobada' ? '✔ Aprobada' : '⏳ Pendiente'}</span>
+          </div>
+          <div class="pac-actions">
+            <button class="tbtn green" onclick="aprobarPropuesta('${p.id}')">✅ Aprobar para Agenda</button>
+            <button class="tbtn" onclick="alert('Solicitar más info sobre: ${p.nombre}')">📝 Pedir información</button>
+            <button class="tbtn red" onclick="alert('Rechazada: ${p.nombre}')">✕ Rechazar</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function aprobarPropuesta(id) {
+      const p = PROPUESTAS_ADMIN.find(x => x.id === id);
+      if (p) {
+        p.estado = 'aprobada';
+        renderAdminPropuestas();
+        document.getElementById('badge-propuestas').textContent =
+          PROPUESTAS_ADMIN.filter(x => x.estado === 'pendiente').length;
+        alert(`✅ Propuesta aprobada.\nSe notificará al ciudadano y se incluirá en la agenda del próximo Consejo Municipal.`);
+      }
+    }
+
+    const PROMESAS_DATA = [
+      { texto: 'Pavimentar calles principales de Volcán', estado: 'cumplida', pct: 100 },
+      { texto: 'Dotar de alumbrado LED al 80% del distrito', estado: 'proceso', pct: 52 },
+      { texto: 'Digitalizar trámites de ventanilla', estado: 'proceso', pct: 35 },
+      { texto: 'Cancha multipropósito en Río Sereno', estado: 'cumplida', pct: 100 },
+      { texto: 'Planta de tratamiento agua en Cerro Punta', estado: 'pendiente', pct: 8 },
+      { texto: 'Programa empleo agrícola juvenil', estado: 'proceso', pct: 61 },
+    ];
+
+    function renderAdminPromesas() {
+      const c = document.getElementById('promesasAdminList');
+      if (!c) return;
+      c.innerHTML = PROMESAS_DATA.map((p, i) => `
+        <div class="promesa-admin-row">
+          <div class="par-texto">${p.texto}</div>
+          <select class="af-select sm" onchange="PROMESAS_DATA[${i}].estado=this.value">
+            <option value="cumplida" ${p.estado==='cumplida'?'selected':''}>✔ Cumplida</option>
+            <option value="proceso"  ${p.estado==='proceso'?'selected':''}>🔄 En Proceso</option>
+            <option value="pendiente"${p.estado==='pendiente'?'selected':''}>⏳ Pendiente</option>
+          </select>
+          <div class="par-pct-wrap">
+            <input type="range" min="0" max="100" value="${p.pct}"
+                   oninput="this.nextElementSibling.textContent=this.value+'%'; PROMESAS_DATA[${i}].pct=parseInt(this.value)">
+            <span class="par-pct">${p.pct}%</span>
+          </div>
+        </div>
+      `).join('');
+    }
+  </script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
