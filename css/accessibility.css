@@ -1,0 +1,190 @@
+/* ══════════════════════════════════════
+   ACCESSIBILITY.CSS
+   Lenguaje Fácil, Ngäbere, Alto Contraste
+   Tierras Altas Transparente v1.0
+══════════════════════════════════════ */
+
+/* ── MODO LENGUAJE FÁCIL ── */
+body.lang-simple .hero h1 { font-size: clamp(2rem, 5vw, 4rem); line-height: 1.2; }
+body.lang-simple .hero-sub { font-size: 1.2rem; line-height: 1.9; }
+body.lang-simple .section-sub { font-size: 1rem; line-height: 1.9; }
+body.lang-simple .kpi-label { font-size: 0.88rem; letter-spacing: 0; }
+body.lang-simple .form-label { font-size: 0.95rem; }
+body.lang-simple .form-hint { font-size: 0.85rem; }
+body.lang-simple .btn-primary,
+body.lang-simple .btn-ghost,
+body.lang-simple .btn-submit,
+body.lang-simple .btn-ticket { font-size: 1rem; padding-top: 1rem; padding-bottom: 1rem; }
+body.lang-simple .nav-links a { font-size: 0.9rem; }
+body.lang-simple .tramite-desc { font-size: 0.92rem; line-height: 1.8; }
+body.lang-simple .voto-nombre { font-size: 1rem; }
+body.lang-simple .ticket-desc { font-size: 0.95rem; }
+
+/* Pictogramas visibles en modo simple */
+body.lang-simple .tramite-icon-wrap { width: 70px; height: 70px; font-size: 2rem; }
+body.lang-simple .kpi-icon { width: 56px; height: 56px; font-size: 1.7rem; }
+
+/* ── BANNER DE MODO ── */
+.lang-mode-banner {
+  display: none;
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 4000;
+  background: var(--verde-altura);
+  color: white;
+  padding: 0.7rem 1.25rem;
+  border-radius: var(--radius-md);
+  font-size: 0.8rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-lg);
+  animation: slideDown 0.3s ease;
+  max-width: 260px;
+  line-height: 1.5;
+}
+.lang-mode-banner.visible { display: block; }
+.lang-mode-close {
+  position: absolute;
+  top: 0.4rem; right: 0.5rem;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.6);
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+/* ── MODO NGÄBERE ── */
+body.lang-ngabe {
+  /* Ngäbere usa fuentes más grandes y espaciado generoso */
+  font-size: 17px;
+  line-height: 1.75;
+}
+body.lang-ngabe .section-title { letter-spacing: 0.01em; }
+body.lang-ngabe .form-input,
+body.lang-ngabe .form-select,
+body.lang-ngabe .form-textarea {
+  font-size: 1rem;
+  padding: 0.85rem 1rem;
+}
+body.lang-ngabe .btn-submit,
+body.lang-ngabe .btn-ticket {
+  font-size: 1.05rem;
+  padding: 1rem;
+}
+
+/* Indicador de idioma activo */
+.lang-btn[aria-pressed="true"] {
+  background: var(--oro-chiricano);
+  border-color: var(--oro-chiricano);
+  color: white;
+}
+
+/* ── ALTO CONTRASTE ── */
+@media (prefers-contrast: high) {
+  :root {
+    --verde-altura: #003d1a;
+    --verde-claro:  #008040;
+    --texto-oscuro: #000000;
+    --blanco-niebla: #ffffff;
+    --gris-piedra: #333333;
+  }
+  .kpi-card, .chart-card, .tramite-card, .proyecto-card, .voto-card {
+    border: 2px solid #000 !important;
+  }
+  .btn-primary, .btn-submit, .btn-ticket {
+    border: 2px solid currentColor !important;
+  }
+}
+
+body.alto-contraste {
+  --verde-altura: #003d1a;
+  --verde-claro:  #008040;
+  --texto-oscuro: #000000;
+  --blanco-niebla: #ffffff;
+  --gris-piedra: #333333;
+}
+body.alto-contraste .kpi-card,
+body.alto-contraste .chart-card,
+body.alto-contraste .tramite-card,
+body.alto-contraste .proyecto-card,
+body.alto-contraste .voto-card { border: 2px solid #000 !important; }
+
+/* ── REDUCIR MOVIMIENTO ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── FOCUS INDICATORS REFORZADOS ── */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--oro-chiricano) !important;
+  outline-offset: 3px !important;
+  border-radius: 3px;
+}
+
+/* ── TEXTO GRANDE ── */
+body.texto-grande {
+  font-size: 18px;
+}
+body.texto-grande .nav-links a   { font-size: 0.9rem; }
+body.texto-grande .kpi-value     { font-size: 2.2rem; }
+body.texto-grande .section-sub   { font-size: 1rem; }
+body.texto-grande .tramite-title { font-size: 1.1rem; }
+body.texto-grande .form-label    { font-size: 0.9rem; }
+
+/* ── PANEL DE ACCESIBILIDAD FLOTANTE ── */
+.a11y-panel {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  z-index: 4000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.a11y-btn {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--verde-altura);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
+  transition: var(--transition);
+  position: relative;
+}
+.a11y-btn:hover {
+  background: var(--verde-medio);
+  transform: scale(1.08);
+}
+.a11y-btn::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 52px;
+  background: var(--texto-oscuro);
+  color: white;
+  font-size: 0.72rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+.a11y-btn:hover::after { opacity: 1; }
+
+/* ── SKIP REGION ── */
+[id]:not(body):not(html) { scroll-margin-top: 120px; }

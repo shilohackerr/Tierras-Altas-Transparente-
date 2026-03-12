@@ -1,0 +1,197 @@
+/* ══════════════════════════════════════
+   BASE.CSS — Variables, Reset, Tipografía
+   Tierras Altas Transparente v1.0
+══════════════════════════════════════ */
+
+:root {
+  /* Paleta principal */
+  --verde-altura:  #1a4a2e;
+  --verde-medio:   #2d6a46;
+  --verde-claro:   #4a9465;
+  --verde-suave:   rgba(74,148,101,0.1);
+  --oro-chiricano: #c8952a;
+  --oro-claro:     #e8b84b;
+  --cielo:         #0f3460;
+  --cielo-claro:   #1a5276;
+  --blanco-niebla: #f5f4f0;
+  --gris-piedra:   #8a8880;
+  --gris-suave:    #e8e7e3;
+  --texto-oscuro:  #1c1b18;
+  --rojo-alerta:   #c0392b;
+  --amarillo-obra: #d4ac0d;
+
+  /* Sombras */
+  --shadow-sm:   0 2px 8px  rgba(0,0,0,0.06);
+  --shadow-md:   0 6px 20px rgba(0,0,0,0.08);
+  --shadow-lg:   0 16px 48px rgba(0,0,0,0.14);
+  --shadow-deep: 0 24px 64px rgba(0,0,0,0.22);
+
+  /* Radios */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+
+  /* Transiciones */
+  --transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Tipografía */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+}
+
+/* ── RESET ── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--blanco-niebla);
+  color: var(--texto-oscuro);
+  overflow-x: hidden;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Grain de textura sutil */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.35;
+}
+
+/* ── TIPOGRAFÍA BASE ── */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  line-height: 1.15;
+  color: var(--texto-oscuro);
+}
+
+h1 { font-size: clamp(2.6rem, 6vw, 5.2rem); font-weight: 700; }
+h2 { font-size: clamp(1.8rem, 3.5vw, 2.7rem); font-weight: 600; }
+h3 { font-size: 1.15rem; font-weight: 600; }
+
+p { line-height: 1.7; }
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+ul { list-style: none; }
+
+img, svg { display: block; max-width: 100%; }
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+input, select, textarea {
+  font-family: var(--font-body);
+}
+
+/* ── ACCESIBILIDAD BASE ── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 10000;
+  background: var(--verde-altura);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: top 0.2s;
+}
+.skip-link:focus {
+  top: 1rem;
+  outline: 3px solid var(--oro-claro);
+}
+
+/* Focus visible global */
+:focus-visible {
+  outline: 3px solid var(--oro-chiricano);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* ── ANIMACIONES ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.75); }
+}
+
+@keyframes ping {
+  0%   { transform: scale(1);  opacity: 0.25; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.88) translateY(18px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── TEXTO GRANDE (accesibilidad) ── */
+body.texto-grande {
+  font-size: 19px;
+}
+body.texto-grande h1 { font-size: clamp(2.8rem, 6vw, 5.5rem); }
+body.texto-grande .kpi-value { font-size: 2.4rem; }
+body.texto-grande .form-label { font-size: 1rem; }
+
+/* ── ALTO CONTRASTE ── */
+body.alto-contraste {
+  --verde-altura: #003300;
+  --verde-claro:  #00aa55;
+  --texto-oscuro: #000000;
+  --blanco-niebla: #ffffff;
+  --gris-piedra: #444444;
+}
+body.alto-contraste .kpi-card,
+body.alto-contraste .chart-card,
+body.alto-contraste .tramite-card {
+  border: 2px solid #000 !important;
+}
