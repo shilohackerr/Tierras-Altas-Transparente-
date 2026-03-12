@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <radialGradient id="bgGrad" cx="40%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.12)"/>
+      <stop offset="100%" stop-color="rgba(0,0,20,0.25)"/>
+    </radialGradient>
+    <linearGradient id="triLight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="60%" stop-color="#e8eaf0"/>
+      <stop offset="100%" stop-color="#c8ccd8"/>
+    </linearGradient>
+    <linearGradient id="triShadow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8890b0"/>
+      <stop offset="100%" stop-color="#b0b5c8"/>
+    </linearGradient>
+  </defs>
+  <circle cx="100" cy="100" r="100" fill="#0d35b8"/>
+  <circle cx="100" cy="100" r="100" fill="url(#bgGrad)"/>
+  <!-- Montaña izquierda -->
+  <polygon points="38,130 62,72 62,130" fill="url(#triShadow)"/>
+  <polygon points="62,72 86,130 62,130" fill="url(#triLight)"/>
+  <!-- Montaña derecha -->
+  <polygon points="114,130 138,72 138,130" fill="url(#triShadow)"/>
+  <polygon points="138,72 162,130 138,130" fill="url(#triLight)"/>
+  <!-- Montaña central (principal) -->
+  <polygon points="72,130 100,55 100,130" fill="#9098b8"/>
+  <polygon points="100,55 128,130 100,130" fill="#ffffff"/>
+  <line x1="100" y1="55" x2="100" y2="130" stroke="rgba(255,255,255,0.6)" stroke-width="0.8"/>
+  <!-- Texto ALCALDÍA DE -->
+  <text x="100" y="148" text-anchor="middle" font-family="'Montserrat','Arial Narrow',sans-serif" font-size="9.5" font-weight="300" fill="white" letter-spacing="3.5">ALCALDÍA DE</text>
+  <!-- Caja TIERRAS ALTAS -->
+  <rect x="28" y="153" width="144" height="24" fill="none" stroke="white" stroke-width="1.5" rx="1"/>
+  <text x="100" y="169.5" text-anchor="middle" font-family="'Montserrat','Arial Narrow',sans-serif" font-size="12.5" font-weight="700" fill="white" letter-spacing="3">TIERRAS ALTAS</text>
+</svg>
