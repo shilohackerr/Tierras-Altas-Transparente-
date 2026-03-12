@@ -1,0 +1,13 @@
+{
+  "name": "Alcaldía de Tierras Altas — Portal Ciudadano",
+  "short_name": "Tierras Altas",
+  "description": "Plataforma oficial de transparencia, participación ciudadana y trámites del Municipio de Tierras Altas, Chiriquí, Panamá.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#060c22",
+  "theme_color": "#0d35b8",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
