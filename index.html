@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Plataforma oficial de transparencia, participación ciudadana y trámites digitales del Municipio de Tierras Altas, Chiriquí, Panamá.">
+  <meta name="theme-color" content="#0d35b8">
+  <meta property="og:title" content="Alcaldía de Tierras Altas — Portal Transparente">
+  <meta property="og:description" content="Fiscaliza fondos, propone obras, reporta incidencias y gestiona trámites. #unidossomosmás">
+  <meta property="og:type" content="website">
+  <title>Alcaldía de Tierras Altas · Portal Ciudadano — Chiriquí, Panamá</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/accessibility.css">
+</head>
+<body>
+
+  <a class="skip-link" href="#contenido-principal">Saltar al contenido principal</a>
+
+  <!-- ALERT STRIP -->
+  <div class="alert-strip" id="alertStrip" role="alert" aria-live="polite">
+    <span>AUDIENCIA PÚBLICA PIOPYSM · Sábado 14 de marzo de 2026 · Escuela Básica de Volcán · 3:30 PM — <strong>Todos invitados</strong></span>
+    <button class="alert-close" onclick="closeAlert()" aria-label="Cerrar aviso">✕</button>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav-principal" role="navigation" aria-label="Navegación principal">
+    <a class="nav-logo" href="#" aria-label="Alcaldía de Tierras Altas — Inicio">
+      <img src="logo.svg" alt="" width="42" height="42" class="logo-img" aria-hidden="true">
+      <div class="nav-nombre">
+        Alcaldía de Tierras Altas
+        <em>Transparente</em>
+        <span>Chiriquí · República de Panamá</span>
+      </div>
+    </a>
+
+    <div class="lang-selector" role="group" aria-label="Idioma">
+      <button class="lang-btn active" onclick="setLang('es')" aria-pressed="true">ES</button>
+      <button class="lang-btn" onclick="setLang('simple')" aria-pressed="false">Fácil</button>
+      <button class="lang-btn" onclick="setLang('ngabe')" aria-pressed="false">Ngäbe</button>
+    </div>
+
+    <ul class="nav-links" role="list">
+      <li><a href="#fiscalizacion">Presupuesto</a></li>
+      <li><a href="#proyectos">Proyectos</a></li>
+      <li><a href="#propuestas">Propuestas</a></li>
+      <li><a href="#quejas">Quejas</a></li>
+      <li><a href="#tramites">Trámites</a></li>
+      <li><a href="#rendicion">Rendición</a></li>
+      <li><a href="admin/index.html" class="nav-admin" target="_blank">Admin</a></li>
+      <li><a href="#" class="nav-cta" onclick="openLogin()">Ingresar</a></li>
+    </ul>
+
+    <button class="nav-hamburger" onclick="toggleMobileMenu()" aria-label="Menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <a href="#fiscalizacion" onclick="closeMobileMenu()">Presupuesto</a>
+    <a href="#proyectos" onclick="closeMobileMenu()">Proyectos</a>
+    <a href="#propuestas" onclick="closeMobileMenu()">Propuestas</a>
+    <a href="#quejas" onclick="closeMobileMenu()">Quejas 311</a>
+    <a href="#tramites" onclick="closeMobileMenu()">Trámites</a>
+    <a href="#rendicion" onclick="closeMobileMenu()">Rendición</a>
+    <a href="admin/index.html" target="_blank">Panel Admin</a>
+    <div class="mobile-lang">
+      <button onclick="setLang('es')">Español</button>
+      <button onclick="setLang('simple')">Fácil</button>
+      <button onclick="setLang('ngabe')">Ngäbere</button>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero" id="inicio" aria-labelledby="hero-titulo">
+    <div class="hero-bg-gradient" aria-hidden="true"></div>
+    <div class="hero-orb" aria-hidden="true"></div>
+    <div class="hero-grid-lines" aria-hidden="true"></div>
+
+    <div class="hero-content" id="contenido-principal">
+      <!-- Institutional chips -->
+      <div class="hero-inst-bar" aria-label="Identificación institucional">
+        <div class="inst-chip">
+          <svg width="14" height="10" viewBox="0 0 14 10" aria-hidden="true">
+            <rect width="14" height="3.3" fill="#CE1126"/>
+            <rect y="3.3" width="14" height="3.4" fill="#fff"/>
+            <rect y="6.7" width="14" height="3.3" fill="#CE1126"/>
+            <rect width="4" height="10" fill="#003087"/>
+          </svg>
+          Gobierno Nacional
+        </div>
+        <div class="inst-sep" aria-hidden="true"></div>
+        <div class="inst-chip">AND · Descentralización</div>
+      </div>
+
+      <div class="hero-eyebrow" data-i18n="badge">Alcaldía de Tierras Altas</div>
+
+      <h1 id="hero-titulo">
+        Toma el control de
+        <span class="line-accent" data-i18n="hero_title_2">tu corregimiento.</span>
+      </h1>
+
+      <!-- PIOPYSM badge 3D -->
+      <div class="hero-badge-box">
+        <div class="badge-icon-3d" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00e64d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="badge-text-label">PIOPYSM · PIOPS · IBI</div>
+          <div class="badge-text-desc" data-i18n="hero_sub">Consulta el presupuesto, propón obras y reporta daños en tiempo real.</div>
+        </div>
+      </div>
+
+      <!-- BUSCADOR CENTRAL -->
+      <div class="hero-search-wrap" role="search" aria-label="Buscador de módulos">
+        <div class="hero-search-box">
+          <svg class="hero-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input
+            type="search"
+            id="heroSearch"
+            class="hero-search-input"
+            placeholder="¿Qué quieres resolver hoy? Ej: bache, pagar IBI, ver presupuesto…"
+            aria-label="Buscar módulo"
+            autocomplete="off"
+            oninput="heroSearchFilter(this.value)"
+          >
+          <button class="hero-search-clear" id="heroSearchClear" onclick="clearHeroSearch()" aria-label="Limpiar búsqueda" hidden>✕</button>
+        </div>
+        <div class="hero-search-results" id="heroSearchResults" role="listbox" aria-label="Resultados" hidden></div>
+      </div>
+
+      <div class="hero-actions">
+        <a href="#fiscalizacion" class="btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          <span data-i18n="hero_btn1">Mira en qué se gasta tu dinero</span>
+        </a>
+        <a href="#quejas" class="btn-ghost">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span data-i18n="hero_btn2">Reportar Incidencia</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- 3D Stats -->
+    <div class="hero-stats" aria-label="Estadísticas">
+      <div class="stat-card">
+        <span class="stat-num green" aria-label="Presupuesto 2026">B/.2.4M</span>
+        <div class="stat-label" data-i18n="stat1">Presupuesto 2026</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num" aria-label="18 proyectos activos">18</span>
+        <div class="stat-label" data-i18n="stat2">Proyectos Activos</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num" aria-label="94% tickets resueltos">94%</span>
+        <div class="stat-label" data-i18n="stat3">Tickets Resueltos</div>
+      </div>
+    </div>
+
+    <div class="hero-hashtag" aria-hidden="true">#unidossomosmás</div>
+  </section>
+
+  <!-- MÓDULOS NAV -->
+  <nav class="modulos-nav" id="modulosNav" aria-label="Módulos">
+    <a class="mod-tab active" href="#fiscalizacion" data-section="fiscalizacion">
+      <span class="mod-dot" style="background:#00e64d" aria-hidden="true"></span>
+      <span data-i18n="mod1">Presupuesto</span>
+    </a>
+    <a class="mod-tab" href="#proyectos" data-section="proyectos">
+      <span class="mod-dot" style="background:#f6c90e" aria-hidden="true"></span>
+      <span data-i18n="mod2">Obras en el Mapa</span>
+    </a>
+    <a class="mod-tab" href="#propuestas" data-section="propuestas">
+      <span class="mod-dot" style="background:#1e53e5" aria-hidden="true"></span>
+      <span data-i18n="mod3">Proponer Obra</span>
+    </a>
+    <a class="mod-tab" href="#quejas" data-section="quejas">
+      <span class="mod-dot" style="background:#e53e3e" aria-hidden="true"></span>
+      <span data-i18n="mod4">Reportar 311</span>
+    </a>
+    <a class="mod-tab" href="#tramites" data-section="tramites">
+      <span class="mod-dot" style="background:#9f7aea" aria-hidden="true"></span>
+      <span data-i18n="mod5">Pagar Trámites</span>
+    </a>
+    <a class="mod-tab" href="#rendicion" data-section="rendicion">
+      <span class="mod-dot" style="background:#f6c90e" aria-hidden="true"></span>
+      <span data-i18n="mod6">Rendición</span>
+    </a>
+  </nav>
+
+  <main role="main">
+
+  <!-- MÓDULO 1 · FISCALIZACIÓN -->
+  <section id="fiscalizacion" class="section-module" aria-labelledby="fiscal-titulo">
+    <div class="section-header-row">
+      <div>
+        <span class="section-eyebrow">Módulo 01 · Transparencia Fiscal</span>
+        <h2 class="section-title" id="fiscal-titulo">Mira en qué se gasta <em>tu dinero</em></h2>
+        <p class="section-sub" data-i18n="fiscal_sub">Datos actualizados desde la Autoridad Nacional de Descentralización y la Contraloría de la República.</p>
+      </div>
+      <div class="filter-bar" role="group" aria-label="Filtros">
+        <select class="filter-select" id="filtro-correg" onchange="filterDashboard()" aria-label="Corregimiento">
+          <option value="todos">Todos los Corregimientos</option>
+          <option value="volcan">Volcán</option>
+          <option value="cerropunta">Cerro Punta</option>
+          <option value="cuestapiedra">Cuesta de Piedra</option>
+          <option value="pasoancho">Paso Ancho</option>
+          <option value="riosereno">Río Sereno</option>
+        </select>
+        <select class="filter-select" id="filtro-year" onchange="filterDashboard()" aria-label="Año">
+          <option>2026</option><option>2025</option><option>2024</option>
+        </select>
+        <select class="filter-select" id="filtro-rubro" onchange="filterDashboard()" aria-label="Rubro">
+          <option value="todos">Todos los Rubros</option>
+          <option value="ibi">IBI</option>
+          <option value="piops">PIOPS</option>
+          <option value="propios">Fondos Propios</option>
+        </select>
+        <button class="btn-export" onclick="exportData('csv')" aria-label="Exportar CSV">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          CSV
+        </button>
+        <button class="btn-export" onclick="exportData('json')" aria-label="Exportar JSON">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          JSON
+        </button>
+      </div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-grid" id="kpiGrid" role="list" aria-label="Indicadores de presupuesto">
+      <div class="kpi-card verde" role="listitem">
+        <div class="kpi-change up" aria-label="Incremento 12%">+12%</div>
+        <div class="kpi-icon-wrap" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#00b83d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 000 4h4a2 2 0 010 4H8"/><path d="M12 6v2m0 8v2"/></svg>
+        </div>
+        <div class="kpi-value" id="kpi-recibido">B/.2,430,000</div>
+        <div class="kpi-label" data-i18n="kpi1">Total Recibido — IBI + PIOPS</div>
+      </div>
+      <div class="kpi-card oro" role="listitem">
+        <div class="kpi-change up">+8%</div>
+        <div class="kpi-icon-wrap" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#c8980a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <div class="kpi-value" id="kpi-ejecutado">B/.1,148,400</div>
+        <div class="kpi-label" data-i18n="kpi2">Ejecutado — 47.3%</div>
+      </div>
+      <div class="kpi-card cielo" role="listitem">
+        <div class="kpi-change neutral">En curso</div>
+        <div class="kpi-icon-wrap" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1440d0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+        </div>
+        <div class="kpi-value" id="kpi-proceso">B/.680,000</div>
+        <div class="kpi-label" data-i18n="kpi3">En Proceso de Ejecución</div>
+      </div>
+      <div class="kpi-card rojo" role="listitem">
+        <div class="kpi-change neutral">Disponible</div>
+        <div class="kpi-icon-wrap" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#c53030" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+        </div>
+        <div class="kpi-value" id="kpi-saldo">B/.601,600</div>
+        <div class="kpi-label" data-i18n="kpi4">Saldo por Comprometer</div>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="charts-row">
+      <div class="chart-card">
+        <div class="chart-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          Ejecución por Corregimiento
+        </div>
+        <div class="bar-chart" id="barChart" role="img" aria-label="Gráfico de barras por corregimiento"></div>
+        <div class="bar-legend" aria-hidden="true">
+          <div class="legend-item"><div class="legend-dot" style="background:var(--azul-light)"></div>Recibido</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--verde)"></div>Ejecutado</div>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Progreso por Área de Gasto
+        </div>
+        <div class="progress-section" id="progressSection" role="list" aria-label="Progreso por área"></div>
+      </div>
+    </div>
+
+    <!-- Docs -->
+    <div class="chart-card">
+      <div class="chart-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Órdenes de Compra — Contraloría de la República
+      </div>
+      <div class="doc-list" id="docList" role="list" aria-label="Documentos de Contraloría"></div>
+    </div>
+  </section>
+
+  <!-- MÓDULO 2 · PROYECTOS -->
+  <section id="proyectos" class="section-module" aria-labelledby="proyectos-titulo">
+    <span class="section-eyebrow">Módulo 02 · Inversión Comunitaria</span>
+    <h2 class="section-title" id="proyectos-titulo">Encuentra <em>tu obra</em> en el mapa</h2>
+    <p class="section-sub" data-i18n="proyectos_sub">Haz clic en un pin para ver costo, contratista y estado. Cada balboa invertido, visible.</p>
+    <div class="mapa-layout">
+      <div class="mapa-container" role="img" aria-label="Mapa interactivo de proyectos">
+        <div class="mapa-topbar">
+          <div class="mapa-badge">
+            <svg width="10" height="12" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5" fill="currentColor"/></svg>
+            Distrito de Tierras Altas
+          </div>
+          <div class="mapa-leyenda" aria-label="Leyenda">
+            <div class="leyenda-dot"><div class="leyenda-circle" style="background:#00e64d"></div>Finalizado</div>
+            <div class="leyenda-dot"><div class="leyenda-circle" style="background:#f6c90e"></div>En Obra</div>
+            <div class="leyenda-dot"><div class="leyenda-circle" style="background:#e53e3e"></div>Detenido</div>
+          </div>
+        </div>
+        <svg class="mapa-svg" id="mapaSVG" viewBox="0 0 600 420" xmlns="http://www.w3.org/2000/svg" role="presentation"></svg>
+        <div class="mapa-info-banner" id="mapaInfoBanner" role="region" aria-live="polite" aria-label="Proyecto seleccionado">
+          <div class="info-titulo" id="mapaInfoTitulo">Selecciona un proyecto</div>
+          <div class="info-grid">
+            <div class="info-item"><div class="info-item-label">Costo Total</div><div class="info-item-value" id="mapaInfoCosto">—</div></div>
+            <div class="info-item"><div class="info-item-label">Contratista</div><div class="info-item-value" id="mapaInfoEmpresa">—</div></div>
+            <div class="info-item"><div class="info-item-label">N° Contrato</div><div class="info-item-value" id="mapaInfoContrato">—</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="proyectos-sidebar">
+        <div class="sidebar-search">
+          <input type="search" id="buscarProyecto" class="search-input" placeholder="Buscar proyecto..." oninput="filterProjects(this.value)" aria-label="Buscar proyecto">
+        </div>
+        <div class="proyectos-list" id="proyectosList" role="list" aria-label="Lista de proyectos"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MÓDULO 3 · PROPUESTAS -->
+  <section id="propuestas" class="section-module" aria-labelledby="propuestas-titulo">
+    <span class="section-eyebrow">Módulo 03 · Presupuesto Participativo</span>
+    <h2 class="section-title" id="propuestas-titulo">Buzón de <em>Propuestas</em></h2>
+    <p class="section-sub" data-i18n="propuestas_sub">Las propuestas más votadas son presentadas al Consejo Municipal en la próxima sesión ordinaria.</p>
+    <div class="propuestas-layout">
+      <div class="form-section">
+        <h3 class="form-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          <span data-i18n="form_propuesta_title">Enviar Nueva Propuesta</span>
+        </h3>
+        <form id="formPropuesta" onsubmit="submitPropuesta(event)" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="cedula-prop">Cédula <span class="required" aria-hidden="true">*</span></label>
+            <input class="form-input" type="text" id="cedula-prop" placeholder="8-888-888" maxlength="12" required pattern="[0-9\-]+" aria-describedby="cedula-hint">
+            <div class="form-hint" id="cedula-hint" data-i18n="cedula_hint">Confirma que eres vecino del distrito.</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="correg-prop">Corregimiento <span class="required" aria-hidden="true">*</span></label>
+            <select class="form-select" id="correg-prop" required>
+              <option value="">Selecciona tu corregimiento</option>
+              <option value="volcan">Volcán</option>
+              <option value="cerropunta">Cerro Punta</option>
+              <option value="cuestapiedra">Cuesta de Piedra</option>
+              <option value="pasoancho">Paso Ancho</option>
+              <option value="riosereno">Río Sereno</option>
+              <option value="nuevacalifornia">Nueva California</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="titulo-prop">Título de la Propuesta <span class="required" aria-hidden="true">*</span></label>
+            <input class="form-input" type="text" id="titulo-prop" placeholder="Ej: Construcción de parque infantil" required maxlength="120">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="desc-prop">Problema que Resuelve <span class="required" aria-hidden="true">*</span></label>
+            <textarea class="form-textarea" id="desc-prop" placeholder="Describe el problema y cómo esta propuesta lo soluciona..." required minlength="50"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Evidencia Fotográfica</label>
+            <div class="upload-zone" onclick="document.getElementById('foto-prop').click()" role="button" tabindex="0" aria-label="Adjuntar fotos">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8892b0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin:0 auto .5rem"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              <p data-i18n="upload_hint">Toca para adjuntar fotos de la zona</p>
+              <p class="upload-sub">JPG, PNG · máx. 5MB</p>
+            </div>
+            <input type="file" id="foto-prop" accept="image/*" multiple style="display:none" onchange="previewFiles(this)">
+            <div id="preview-fotos" class="preview-fotos"></div>
+          </div>
+          <div class="form-error" id="error-propuesta" role="alert" aria-live="assertive"></div>
+          <button type="submit" class="btn-submit">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            <span data-i18n="btn_enviar_propuesta">Enviar Propuesta al Consejo</span>
+          </button>
+        </form>
+      </div>
+      <div class="votacion-section">
+        <div class="votacion-header">
+          <h3 class="votacion-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span data-i18n="votacion_title">Propuestas en Votación</span>
+          </h3>
+          <span class="votacion-badge">Cierra 31 Mar 2026</span>
+        </div>
+        <div class="voto-cards" id="votoCards" role="list" aria-label="Propuestas en votación"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MÓDULO 4 · QUEJAS 311 -->
+  <section id="quejas" class="section-module" aria-labelledby="quejas-titulo">
+    <span class="section-eyebrow">Módulo 04 · Sistema de Reportes</span>
+    <h2 class="section-title" id="quejas-titulo">Reportar <em>Incidencia</em></h2>
+    <p class="section-sub" data-i18n="quejas_sub">Tu reporte se sincroniza con el sistema 311 Panamá y la cuadrilla municipal.</p>
+    <div class="quejas-layout">
+      <div class="ticket-form-wrap">
+        <h3 class="ticket-form-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e53e3e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span data-i18n="ticket_title">Nueva Incidencia</span>
+        </h3>
+        <p class="ticket-form-sub" data-i18n="ticket_sub">Generamos tu código de rastreo al enviar.</p>
+        <form id="formQueja" onsubmit="submitQueja(event)" novalidate>
+          <div class="ticket-form-group">
+            <label class="ticket-label" for="tipo-queja">Tipo de Incidencia <span class="required">*</span></label>
+            <select class="ticket-select" id="tipo-queja" required>
+              <option value="">Selecciona...</option>
+              <option value="luminaria">Luminaria dañada o apagada</option>
+              <option value="bache">Bache o daño en calle</option>
+              <option value="agua">Falta de agua / tubería rota</option>
+              <option value="arbol">Árbol caído / riesgo vial</option>
+              <option value="basura">Basura acumulada</option>
+              <option value="senal">Señal de tráfico dañada</option>
+              <option value="obra">Obra pública abandonada</option>
+              <option value="otro">Otro</option>
+            </select>
+          </div>
+          <div class="ticket-form-group">
+            <label class="ticket-label" for="correg-queja">Corregimiento <span class="required">*</span></label>
+            <select class="ticket-select" id="correg-queja" required>
+              <option value="volcan">Volcán</option>
+              <option value="cerropunta">Cerro Punta</option>
+              <option value="cuestapiedra">Cuesta de Piedra</option>
+              <option value="pasoancho">Paso Ancho</option>
+              <option value="riosereno">Río Sereno</option>
+            </select>
+          </div>
+          <div class="ticket-form-group">
+            <label class="ticket-label" for="desc-queja">Descripción <span class="required">*</span></label>
+            <textarea class="ticket-textarea" id="desc-queja" placeholder="Describe la incidencia..." required minlength="20"></textarea>
+          </div>
+          <div class="ticket-form-group">
+            <label class="ticket-label">Ubicación GPS</label>
+            <button type="button" class="geo-btn" onclick="captureGeo()" aria-label="Capturar ubicación">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+              <span data-i18n="geo_btn">Capturar mi Ubicación</span>
+            </button>
+            <div class="geo-status" id="geoStatus" aria-live="polite" data-i18n="geo_pending">Coordenadas no capturadas.</div>
+            <input type="hidden" id="geo-lat"><input type="hidden" id="geo-lng">
+          </div>
+          <div class="form-error" id="error-queja" role="alert" aria-live="assertive"></div>
+          <button type="submit" class="btn-ticket">
+            <span data-i18n="btn_ticket">Enviar y Generar Código</span>
+          </button>
+        </form>
+      </div>
+      <div class="tickets-historial">
+        <h3 class="historial-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <span data-i18n="historial_title">Reportes Recientes</span>
+        </h3>
+        <div class="ticket-filtros" role="group" aria-label="Filtrar reportes">
+          <button class="filtro-btn active" onclick="filterTickets('todos', this)">Todos</button>
+          <button class="filtro-btn" onclick="filterTickets('abierto', this)">Pendientes</button>
+          <button class="filtro-btn" onclick="filterTickets('proceso', this)">En Proceso</button>
+          <button class="filtro-btn" onclick="filterTickets('resuelto', this)">Resueltos</button>
+        </div>
+        <div class="ticket-items" id="ticketItems" role="list" aria-label="Lista de reportes"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MÓDULO 5 · TRÁMITES -->
+  <section id="tramites" class="section-module" aria-labelledby="tramites-titulo">
+    <span class="section-eyebrow">Módulo 05 · Ventanilla Única Digital</span>
+    <h2 class="section-title" id="tramites-titulo">Trámites <em>en Línea</em></h2>
+    <p class="section-sub" data-i18n="tramites_sub">Gestiona pagos y solicitudes sin salir de casa. Yappy, tarjeta o ACH.</p>
+    <div class="tramites-grid" id="tramitesGrid" role="list" aria-label="Servicios en línea"></div>
+  </section>
+
+  <!-- MÓDULO 6 · RENDICIÓN -->
+  <section id="rendicion" class="section-module section-azul" aria-labelledby="rendicion-titulo">
+    <span class="section-eyebrow">Módulo 06 · Accountability Público</span>
+    <h2 class="section-title" id="rendicion-titulo">Rendición de <em>Cuentas</em></h2>
+    <p class="section-sub" data-i18n="rendicion_sub">Seguimiento de los compromisos de gestión 2024–2029.</p>
+    <div class="promesas-grid" id="promesasGrid" role="list" aria-label="Compromisos de gestión"></div>
+    <div class="opendata-strip">
+      <div class="opendata-label" data-i18n="opendata_label">Datos Abiertos · Ley de Transparencia · Compatible con OCDS Panamá</div>
+      <div class="opendata-btns">
+        <button class="btn-opendata" onclick="exportData('csv')">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Exportar CSV
+        </button>
+        <button class="btn-opendata" onclick="exportData('json')">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Exportar JSON
+        </button>
+        <button class="btn-opendata" onclick="showApiInfo()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+          API Pública
+        </button>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- ADMIN CTA -->
+  <section class="admin-cta-section" aria-labelledby="admin-cta-titulo">
+    <div class="admin-cta-inner">
+      <img src="logo.svg" alt="" width="60" height="60" class="logo-img admin-cta-icon" aria-hidden="true">
+      <div class="admin-cta-text" style="flex:1">
+        <h3 id="admin-cta-titulo">Panel Administrativo — Solo Funcionarios</h3>
+        <p>Los funcionarios de la Alcaldía acceden al CMS para gestionar datos, aprobar propuestas y responder reportes del 311.</p>
+      </div>
+      <a href="admin/index.html" class="btn-admin-cta" target="_blank">Acceder al Panel →</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer role="contentinfo">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo-row">
+          <img src="logo.svg" alt="Logo Alcaldía de Tierras Altas" width="48" height="48" class="logo-img">
+          <div class="nav-nombre">Alcaldía de Tierras Altas<em>Transparente</em><span>Chiriquí · República de Panamá</span></div>
+        </div>
+        <p class="footer-tagline" data-i18n="footer_tagline">Plataforma oficial de transparencia, participación ciudadana y trámites digitales.</p>
+        <div class="footer-hashtag">#unidossomosmás</div>
+        <div class="footer-langs">
+          <button onclick="setLang('es')" class="footer-lang-btn">Español</button>
+          <button onclick="setLang('simple')" class="footer-lang-btn">Lenguaje Fácil</button>
+          <button onclick="setLang('ngabe')" class="footer-lang-btn">Ngäbere</button>
+        </div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Plataforma</div>
+        <ul>
+          <li><a href="#fiscalizacion">Presupuesto en Tiempo Real</a></li>
+          <li><a href="#proyectos">Visor de Proyectos</a></li>
+          <li><a href="#propuestas">Buzón de Propuestas</a></li>
+          <li><a href="#quejas">Reportar al 311</a></li>
+          <li><a href="#tramites">Ventanilla Única</a></li>
+          <li><a href="#rendicion">Rendición de Cuentas</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Institucional</div>
+        <ul>
+          <li><a href="#">Alcaldía Municipal</a></li>
+          <li><a href="#">Consejo Municipal</a></li>
+          <li><a href="#">Juntas Comunales</a></li>
+          <li><a href="#">Contraloría RGN</a></li>
+          <li><a href="#">MEF · Inversión Pública</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Contacto</div>
+        <ul>
+          <li><a href="tel:775XXXX">775-XXXX</a></li>
+          <li><a href="mailto:alcaldia@tierrasaltas.gob.pa">alcaldia@tierrasaltas.gob.pa</a></li>
+          <li><span>Volcán, Chiriquí, Panamá</span></li>
+          <li><span>Lunes–Viernes · 8:00 AM – 4:00 PM</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 Municipio de Tierras Altas · República de Panamá</div>
+      <div class="footer-legal">
+        <a href="#">Privacidad</a>
+        <a href="#">Términos</a>
+        <a href="#">Accesibilidad</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODALES -->
+  <div class="modal-overlay" id="ticketModal" role="dialog" aria-modal="true" aria-labelledby="modal-ticket-title" onclick="if(event.target===this)closeModal('ticketModal')">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('ticketModal')" aria-label="Cerrar">✕</button>
+      <div class="ticket-success">
+        <div class="ticket-success-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#00e64d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h3 id="modal-ticket-title" data-i18n="ticket_ok_title">Reporte Enviado</h3>
+        <p data-i18n="ticket_ok_sub">Tu incidencia fue registrada y se está sincronizando con el sistema 311 Panamá.</p>
+        <div class="ticket-code-display">
+          <small data-i18n="ticket_code_label">Tu código de rastreo</small>
+          <strong id="ticketCodeDisplay">#TAQ-2026-1042</strong>
+        </div>
+        <button class="btn-submit" onclick="closeModal('ticketModal')" data-i18n="btn_entendido">Entendido</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="propuestaModal" role="dialog" aria-modal="true" aria-labelledby="modal-prop-title" onclick="if(event.target===this)closeModal('propuestaModal')">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('propuestaModal')" aria-label="Cerrar">✕</button>
+      <div class="ticket-success">
+        <div class="ticket-success-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#00e64d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h3 id="modal-prop-title">Propuesta Registrada</h3>
+        <p>Tu propuesta fue enviada al Consejo Municipal. Estará disponible para votación en las próximas 48 horas hábiles.</p>
+        <div class="ticket-code-display">
+          <small>Número de propuesta</small>
+          <strong id="propuestaCodeDisplay">#PRP-2026-089</strong>
+        </div>
+        <button class="btn-submit" onclick="closeModal('propuestaModal')">Entendido</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="modal-login-title" onclick="if(event.target===this)closeModal('loginModal')">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('loginModal')" aria-label="Cerrar">✕</button>
+      <h3 id="modal-login-title" style="font-family:var(--f-display);margin-bottom:1.4rem;font-size:1.3rem;text-transform:uppercase;letter-spacing:.04em;">Ingreso Ciudadano</h3>
+      <div class="login-options">
+        <button class="btn-login-option" onclick="alert('Redirigiendo a Panamá Digital SSO...')">
+          <strong>Panamá Digital</strong>
+          <span>Identidad Digital Oficial · SSO Gobierno de Panamá</span>
+        </button>
+        <button class="btn-login-option secondary" onclick="closeModal('loginModal');window.open('admin/index.html','_blank')">
+          <strong>Acceso de Funcionario</strong>
+          <span>Panel Administrativo · Solo personal autorizado</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="apiModal" role="dialog" aria-modal="true" aria-labelledby="modal-api-title" onclick="if(event.target===this)closeModal('apiModal')">
+    <div class="modal" style="max-width:520px">
+      <button class="modal-close" onclick="closeModal('apiModal')" aria-label="Cerrar">✕</button>
+      <h3 id="modal-api-title" style="font-family:var(--f-display);margin-bottom:.4rem;font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;">API Pública</h3>
+      <p style="font-size:.8rem;color:var(--gris-600);margin-bottom:1.4rem;">Compatible con OCDS — Open Contracting Data Standard, Panamá.</p>
+      <div class="api-endpoint"><div class="api-label">Presupuesto</div><code>GET /api/v1/presupuesto?year=2026</code></div>
+      <div class="api-endpoint"><div class="api-label">Proyectos</div><code>GET /api/v1/proyectos?estado=todos</code></div>
+      <div class="api-endpoint"><div class="api-label">Tickets 311</div><code>GET /api/v1/tickets?estado=resuelto</code></div>
+      <p style="font-size:.7rem;color:var(--gris-400);margin-top:1rem;">JSON, CSV disponibles. Sin autenticación para datos públicos.</p>
+    </div>
+  </div>
+
+  <!-- A11Y -->
+  <div class="a11y-panel" role="complementary" aria-label="Opciones de accesibilidad">
+    <button class="a11y-btn" onclick="document.body.classList.toggle('texto-grande')" data-tooltip="Texto grande" aria-label="Aumentar texto">A+</button>
+    <button class="a11y-btn" onclick="document.body.classList.toggle('alto-contraste')" data-tooltip="Alto contraste" aria-label="Alto contraste">◑</button>
+    <button class="a11y-btn" onclick="setLang('simple')" data-tooltip="Lenguaje fácil" aria-label="Lenguaje fácil">Aa</button>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/sw-register.js"></script>
+</body>
+</html>
