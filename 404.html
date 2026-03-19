@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <title>Página no encontrada — Alcaldía de Tierras Altas</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background: #060c22; color: #fff;
+           display: flex; align-items: center; justify-content: center;
+           min-height: 100vh; margin: 0; }
+    .card { text-align: center; max-width: 480px; padding: 3rem 2rem; }
+    .code { font-size: 5rem; font-weight: 800; color: #0d35b8; line-height: 1; }
+    h1 { font-size: 1.4rem; margin: 1rem 0 .5rem; color: #fff; }
+    p { color: #8892b0; font-size: .9rem; line-height: 1.6; }
+    a { display: inline-block; margin-top: 1.5rem; padding: .7rem 1.8rem;
+        background: #00e64d; color: #060c22; border-radius: 8px;
+        font-weight: 700; text-decoration: none; }
+  </style>
+  <!-- Redirigir al inicio después de 5 segundos -->
+  <script>
+    // Prevenir acceso a rutas sensibles por URL directa
+    const rutasBloqueadas = ['.env', '.git', 'node_modules', 'package.json'];
+    const ruta = window.location.pathname.toLowerCase();
+    if (rutasBloqueadas.some(r => ruta.includes(r))) {
+      window.location.replace('/');
+    }
+    // Auto-redirect al home
+    setTimeout(() => window.location.replace('/Tierras-Altas-Transparente-/'), 5000);
+  </script>
+</head>
+<body>
+  <div class="card">
+    <div class="code">404</div>
+    <h1>Página no encontrada</h1>
+    <p>La dirección que buscas no existe en el Portal Ciudadano de Tierras Altas.<br>
+       Serás redirigido al inicio en 5 segundos.</p>
+    <a href="/Tierras-Altas-Transparente-/">← Volver al Portal</a>
+  </div>
+</body>
+</html>
