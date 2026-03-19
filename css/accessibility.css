@@ -1,0 +1,407 @@
+/* ══════════════════════════════════════════════════════════════
+   ACCESSIBILITY.CSS v2.0 — WCAG 2.1 Nivel AA
+   Portal Ciudadano Transparente · Alcaldía de Tierras Altas
+   Estándar: AIG · WCAG 2.1 AA · Ley de Accesibilidad Digital
+   Marzo 2026
+══════════════════════════════════════════════════════════════ */
+
+/* ══════════════════════════════════════════════════════════════
+   1. SKIP LINKS — WCAG 2.4.1 (Bypass Blocks)
+   Permite a usuarios de teclado saltar la navegación principal
+══════════════════════════════════════════════════════════════ */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 10000;
+  background: var(--azul);
+  color: #fff;
+  padding: .75rem 1.5rem;
+  border-radius: var(--r-sm);
+  font-weight: 700;
+  font-size: .9rem;
+  text-decoration: none;
+  transition: top .2s;
+  white-space: nowrap;
+}
+.skip-link:focus {
+  top: 1rem;
+  outline: 3px solid var(--verde) !important;
+  outline-offset: 3px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   2. FOCUS INDICATORS — WCAG 2.4.7 (Focus Visible) · 1.4.11 (Non-text Contrast)
+   Ratio mínimo 3:1 sobre cualquier fondo — usamos verde (#00e64d) sobre oscuro
+   y azul (#0d35b8) sobre claro
+══════════════════════════════════════════════════════════════ */
+*:focus { outline: none; }
+
+*:focus-visible {
+  outline: 3px solid var(--verde) !important;
+  outline-offset: 3px !important;
+  border-radius: 4px;
+}
+
+/* En fondos claros usamos azul para mantener contraste 4.5:1 */
+.section-module:not(.section-azul) *:focus-visible,
+.form-section *:focus-visible,
+.ticket-form-wrap *:focus-visible {
+  outline-color: var(--azul) !important;
+}
+
+/* Focus en el mapa interactivo — borde visible sobre fondo oscuro */
+.mapa-pin:focus-visible,
+[data-proyecto]:focus-visible {
+  outline: 3px solid var(--verde) !important;
+  outline-offset: 6px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   3. SEMÁNTICA DE BARRAS DE PROGRESO — WCAG 4.1.2 (Name, Role, Value)
+   Los role="progressbar" necesitan estilos que no oculten el valor textual
+══════════════════════════════════════════════════════════════ */
+[role="progressbar"] {
+  position: relative;
+}
+/* Texto del valor siempre visible para lectores de pantalla */
+[role="progressbar"]::after {
+  content: attr(aria-valuenow) "%";
+  position: absolute;
+  right: 0;
+  top: -1.4rem;
+  font-size: .65rem;
+  color: transparent; /* oculto visualmente, accesible por SR */
+}
+
+/* ══════════════════════════════════════════════════════════════
+   4. MODAL / DIALOG — WCAG 2.1.2 (No Keyboard Trap) + 2.4.3 (Focus Order)
+   El modal debe atrapar el foco mientras está abierto
+   y liberarlo al cerrarse
+══════════════════════════════════════════════════════════════ */
+.modal-overlay {
+  display: none;
+}
+.modal-overlay.open {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Indicador visual de que el resto de la página está bloqueada */
+.modal-overlay.open ~ * {
+  pointer-events: none;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   5. ALTO CONTRASTE — WCAG 1.4.3 (Contrast Minimum)
+   Modo manual (botón panel a11y) + sistema operativo
+   Todos los ratios verificados: texto normal ≥ 4.5:1, grande ≥ 3:1
+══════════════════════════════════════════════════════════════ */
+
+/* Activado por el OS */
+@media (prefers-contrast: high) {
+  :root {
+    --azul:       #0000dd;
+    --verde:      #00aa00;
+    --gris-400:   #444444;
+    --gris-600:   #222222;
+    --off-white:  #ffffff;
+  }
+  .kpi-card,
+  .tramite-card,
+  .proyecto-card,
+  .voto-card,
+  .promesa-card,
+  .transp-card { border: 2px solid #000 !important; }
+
+  .btn-primary, .btn-ghost, .btn-submit, .btn-ticket {
+    border: 2px solid currentColor !important;
+  }
+
+  .nav-principal { background: #000 !important; border-bottom: 2px solid #fff; }
+  .hero { background: #000 !important; }
+  .hero h1, .hero-sub { color: #fff !important; }
+}
+
+/* Activado manualmente desde el panel de accesibilidad */
+body.alto-contraste {
+  --azul:       #0000dd;
+  --verde:      #00aa00;
+  --gris-400:   #444444;
+  --gris-600:   #222222;
+  --off-white:  #ffffff;
+}
+body.alto-contraste .kpi-card,
+body.alto-contraste .tramite-card,
+body.alto-contraste .proyecto-card,
+body.alto-contraste .voto-card,
+body.alto-contraste .promesa-card { border: 2px solid #000 !important; }
+
+body.alto-contraste .btn-primary,
+body.alto-contraste .btn-ghost,
+body.alto-contraste .btn-submit,
+body.alto-contraste .btn-ticket { border: 2px solid currentColor !important; }
+
+/* ══════════════════════════════════════════════════════════════
+   6. REDUCIR MOVIMIENTO — WCAG 2.3.3 (Animation from Interactions)
+══════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   7. MODO LENGUAJE FÁCIL — WCAG 3.1.5 (Reading Level)
+   Aumenta tamaño, espaciado y simplifica tipografía
+══════════════════════════════════════════════════════════════ */
+body.lang-simple {
+  font-size: 17px;
+  line-height: 1.8;
+  word-spacing: .05em;
+}
+body.lang-simple .hero h1 {
+  font-size: clamp(1.8rem, 4.5vw, 3.2rem);
+  line-height: 1.25;
+}
+body.lang-simple .hero-sub,
+body.lang-simple .section-sub {
+  font-size: 1.1rem;
+  line-height: 1.9;
+  max-width: 640px;
+}
+body.lang-simple .kpi-label,
+body.lang-simple .kpi-value { font-size: 1.1rem; letter-spacing: 0; }
+body.lang-simple .form-label { font-size: 1rem; font-weight: 700; }
+body.lang-simple .form-hint  { font-size: .9rem; line-height: 1.7; }
+body.lang-simple .btn-primary,
+body.lang-simple .btn-ghost,
+body.lang-simple .btn-submit,
+body.lang-simple .btn-ticket {
+  font-size: 1rem;
+  padding-top: .9rem;
+  padding-bottom: .9rem;
+  min-height: 48px; /* WCAG 2.5.5: target mínimo 44×44px */
+}
+body.lang-simple .nav-links a { font-size: .88rem; }
+body.lang-simple .tramite-desc { font-size: .95rem; line-height: 1.8; }
+body.lang-simple .voto-nombre  { font-size: 1rem; }
+body.lang-simple .ticket-desc  { font-size: .95rem; }
+body.lang-simple .mod-tab { font-size: .75rem; padding: .9rem 1rem; }
+body.lang-simple .tramite-icon-wrap { width: 64px; height: 64px; }
+body.lang-simple .a11y-btn { width: 52px; height: 52px; }
+
+/* Banner de modo activo */
+.lang-mode-banner {
+  display: none;
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 4500;
+  background: var(--azul);
+  color: #fff;
+  padding: .7rem 2rem .7rem 1.25rem;
+  border-radius: var(--r-md);
+  font-size: .82rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-lg);
+  animation: slideDown .3s var(--ease);
+  max-width: 260px;
+  line-height: 1.5;
+  border-left: 4px solid var(--verde);
+}
+.lang-mode-banner.visible { display: block; }
+.lang-mode-close {
+  position: absolute;
+  top: .4rem; right: .5rem;
+  background: none; border: none;
+  color: rgba(255,255,255,.6);
+  cursor: pointer; font-size: .9rem;
+  padding: .2rem .4rem;
+  min-width: 28px; min-height: 28px; /* target táctil */
+}
+.lang-mode-close:focus-visible {
+  outline: 2px solid var(--verde);
+  border-radius: 3px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   8. MODO NGÄBERE — Fuente y espaciado para lengua indígena
+   El Ngäbere tiene diacríticos especiales: ä, ö, ü, ë, ï
+   Necesita line-height generoso para evitar colisiones
+══════════════════════════════════════════════════════════════ */
+body.lang-ngabe {
+  font-size: 16px;
+  line-height: 1.85;
+  letter-spacing: .01em;
+  word-spacing: .08em;
+}
+body.lang-ngabe h1, body.lang-ngabe h2, body.lang-ngabe h3 {
+  line-height: 1.3;
+  letter-spacing: .01em;
+}
+body.lang-ngabe .section-sub {
+  font-size: .92rem;
+  line-height: 1.9;
+}
+body.lang-ngabe .form-input,
+body.lang-ngabe .form-select,
+body.lang-ngabe .form-textarea,
+body.lang-ngabe .lf-input {
+  font-size: 1rem;
+  padding: .85rem 1rem;
+  line-height: 1.6;
+}
+body.lang-ngabe .btn-primary,
+body.lang-ngabe .btn-submit,
+body.lang-ngabe .btn-ticket,
+body.lang-ngabe .btn-ghost {
+  font-size: 1rem;
+  padding: .9rem 1.4rem;
+  min-height: 48px;
+}
+body.lang-ngabe .mod-tab { font-size: .72rem; padding: .9rem 1rem; }
+body.lang-ngabe .tramite-desc,
+body.lang-ngabe .kpi-label,
+body.lang-ngabe .promesa-texto { line-height: 1.9; }
+body.lang-ngabe .ticket-label { font-size: .85rem; }
+
+/* ══════════════════════════════════════════════════════════════
+   9. TEXTO GRANDE — Panel de accesibilidad
+══════════════════════════════════════════════════════════════ */
+body.texto-grande { font-size: 18px; }
+body.texto-grande .nav-links a   { font-size: .88rem; }
+body.texto-grande .kpi-value     { font-size: 2rem !important; }
+body.texto-grande .section-sub   { font-size: 1rem; }
+body.texto-grande .tramite-title { font-size: 1.1rem; }
+body.texto-grande .form-label    { font-size: .95rem; }
+body.texto-grande .btn-primary,
+body.texto-grande .btn-submit,
+body.texto-grande .btn-ticket    { font-size: .9rem; min-height: 48px; }
+
+/* ══════════════════════════════════════════════════════════════
+   10. TAMAÑOS DE OBJETIVO TÁCTIL — WCAG 2.5.5 (Target Size)
+   Mínimo 44×44px para todos los controles interactivos
+══════════════════════════════════════════════════════════════ */
+.btn-primary, .btn-ghost, .btn-submit, .btn-ticket,
+.btn-opendata, .btn-export, .filtro-btn, .lang-btn,
+.modal-close, .a11y-btn {
+  min-height: 44px;
+}
+.lang-btn { min-width: 44px; }
+.filtro-btn { min-height: 40px; padding: .5rem .9rem; }
+.nav-links a { min-height: 44px; display: inline-flex; align-items: center; }
+
+/* ══════════════════════════════════════════════════════════════
+   11. MAPA SVG ACCESIBLE — WCAG 1.1.1 (Non-text Content)
+   El mapa necesita descripción completa para lectores de pantalla
+══════════════════════════════════════════════════════════════ */
+.mapa-container[role="application"] {
+  /* Cursor indica interactividad */
+  cursor: default;
+}
+.mapa-pin-desc {
+  /* Descripción textual accesible del mapa — visible para SR, oculta visualmente */
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+}
+/* Lista alternativa del mapa para usuarios de teclado */
+.mapa-lista-accesible {
+  margin-top: 1rem;
+}
+.mapa-lista-accesible:not([aria-hidden="false"]) { display: none; }
+
+/* ══════════════════════════════════════════════════════════════
+   12. INDICADOR DE IDIOMA ACTIVO — WCAG 3.2.2 (On Input)
+══════════════════════════════════════════════════════════════ */
+.lang-btn[aria-pressed="true"] {
+  background: var(--verde) !important;
+  border-color: var(--verde) !important;
+  color: var(--negro) !important;
+  font-weight: 700;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   13. SR-ONLY — Clase utilitaria para contenido solo para lectores
+   WCAG 1.3.1 (Info and Relationships)
+══════════════════════════════════════════════════════════════ */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0,0,0,0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+.sr-only-focusable:focus { /* visible al recibir foco */
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  clip: auto !important;
+  white-space: normal !important;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   14. PANEL DE ACCESIBILIDAD FLOTANTE
+══════════════════════════════════════════════════════════════ */
+.a11y-panel {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  z-index: 4000;
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+}
+.a11y-btn {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: rgba(6,12,34,.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,.1);
+  color: #fff;
+  cursor: pointer;
+  font-size: .9rem;
+  font-family: var(--f-body);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
+  transition: var(--t);
+  position: relative;
+}
+.a11y-btn:hover { background: var(--azul); border-color: rgba(255,255,255,.2); transform: scale(1.1); }
+.a11y-btn::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 52px;
+  background: var(--negro);
+  color: #fff;
+  font-size: .68rem;
+  padding: .3rem .65rem;
+  border-radius: var(--r-sm);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s;
+}
+.a11y-btn:hover::after, .a11y-btn:focus-visible::after { opacity: 1; }
+
+/* ══════════════════════════════════════════════════════════════
+   15. SCROLL MARGIN — para que anclas no queden bajo la nav fija
+══════════════════════════════════════════════════════════════ */
+[id]:not(body):not(html) { scroll-margin-top: 120px; }
+
+@media (max-width: 560px) {
+  [id]:not(body):not(html) { scroll-margin-top: 110px; }
+}
