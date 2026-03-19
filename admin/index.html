@@ -3,7 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex, nofollow">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+
+  <!-- ══ CABECERAS DE SEGURIDAD — PANEL ADMIN (más estrictas) ══ -->
+
+  <!-- CSP estricta — sin conexiones externas desde el admin -->
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self';
+             script-src 'self';
+             style-src 'self' https://fonts.googleapis.com;
+             font-src 'self' https://fonts.gstatic.com;
+             img-src 'self' data:;
+             connect-src 'self';
+             frame-src 'none';
+             object-src 'none';
+             base-uri 'self';
+             form-action 'self';">
+
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta name="referrer" content="no-referrer">
+
+  <!-- Sin caché para el panel admin — datos sensibles -->
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, private">
+  <meta http-equiv="Pragma" content="no-cache">
+
+  <!-- ══ FIN CABECERAS DE SEGURIDAD ══ -->
   <title>Panel Administrativo — Tierras Altas Transparente</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,700;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -34,7 +59,7 @@
           <input class="lf-input" type="password" id="admin-pass" placeholder="••••••••" autocomplete="current-password">
         </div>
         <div class="lf-error" id="login-error"></div>
-        <button class="lf-btn" onclick="adminLogin()">🔐 Ingresar al Panel</button>
+        <button class="lf-btn" id="btnAdminLogin">🔐 Ingresar al Panel</button>
         <a href="../index.html" class="lf-back">← Volver al sitio público</a>
       </div>
     </div>
@@ -55,34 +80,34 @@
 
       <nav class="sidebar-nav" aria-label="Menú de administración">
         <div class="sidebar-section-label">Principal</div>
-        <a class="sidebar-link active" href="#" onclick="showTab('dashboard', this)" data-tab="dashboard">
+        <a class="sidebar-link active" href="#" data-tab="dashboard">
           <span class="sl-icon">📊</span> Dashboard
         </a>
-        <a class="sidebar-link" href="#" onclick="showTab('presupuesto', this)" data-tab="presupuesto">
+        <a class="sidebar-link" href="#" data-tab="presupuesto">
           <span class="sl-icon">💰</span> Presupuesto
         </a>
-        <a class="sidebar-link" href="#" onclick="showTab('proyectos', this)" data-tab="proyectos">
+        <a class="sidebar-link" href="#" data-tab="proyectos">
           <span class="sl-icon">🏗️</span> Proyectos
         </a>
 
         <div class="sidebar-section-label">Ciudadanía</div>
-        <a class="sidebar-link" href="#" onclick="showTab('propuestas', this)" data-tab="propuestas">
+        <a class="sidebar-link" href="#" data-tab="propuestas">
           <span class="sl-icon">💡</span> Propuestas
           <span class="sl-badge" id="badge-propuestas">4</span>
         </a>
-        <a class="sidebar-link" href="#" onclick="showTab('quejas', this)" data-tab="quejas">
+        <a class="sidebar-link" href="#" data-tab="quejas">
           <span class="sl-icon">🚨</span> Quejas 311
           <span class="sl-badge red" id="badge-quejas">2</span>
         </a>
-        <a class="sidebar-link" href="#" onclick="showTab('tramites', this)" data-tab="tramites">
+        <a class="sidebar-link" href="#" data-tab="tramites">
           <span class="sl-icon">📋</span> Trámites
         </a>
 
         <div class="sidebar-section-label">Rendición</div>
-        <a class="sidebar-link" href="#" onclick="showTab('promesas', this)" data-tab="promesas">
+        <a class="sidebar-link" href="#" data-tab="promesas">
           <span class="sl-icon">✅</span> Promesas
         </a>
-        <a class="sidebar-link" href="#" onclick="showTab('usuarios', this)" data-tab="usuarios">
+        <a class="sidebar-link" href="#" data-tab="usuarios">
           <span class="sl-icon">👥</span> Usuarios Admin
         </a>
 
@@ -90,7 +115,7 @@
         <a class="sidebar-link" href="../index.html" target="_blank">
           <span class="sl-icon">🌐</span> Ver Sitio Público
         </a>
-        <a class="sidebar-link danger" href="#" onclick="adminLogout()">
+        <a class="sidebar-link danger" href="#" id="btnAdminLogout">
           <span class="sl-icon">🚪</span> Cerrar Sesión
         </a>
       </nav>
@@ -102,7 +127,7 @@
       <!-- TOP BAR -->
       <header class="admin-topbar">
         <div class="topbar-left">
-          <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Alternar menú">☰</button>
+          <button class="sidebar-toggle" id="btnSidebarToggle" aria-label="Alternar menú">☰</button>
           <div class="topbar-breadcrumb" id="topbarBreadcrumb">Dashboard</div>
         </div>
         <div class="topbar-right">
@@ -139,11 +164,11 @@
           <div class="admin-card half">
             <div class="ac-title">⚡ Acciones Rápidas</div>
             <div class="quick-actions">
-              <button class="qa-btn" onclick="showTab('presupuesto', document.querySelector('[data-tab=presupuesto]'))">💰 Actualizar Datos Presupuestales</button>
-              <button class="qa-btn" onclick="showTab('proyectos', document.querySelector('[data-tab=proyectos]'))">🏗️ Actualizar Estado de Proyectos</button>
-              <button class="qa-btn orange" onclick="showTab('propuestas', document.querySelector('[data-tab=propuestas]'))">💡 Revisar 4 Propuestas Pendientes</button>
-              <button class="qa-btn red" onclick="showTab('quejas', document.querySelector('[data-tab=quejas]'))">🚨 Asignar Quejas Urgentes (2)</button>
-              <button class="qa-btn" onclick="showTab('promesas', document.querySelector('[data-tab=promesas]'))">✅ Actualizar Promesas de Gestión</button>
+              <button class="qa-btn" data-tab="presupuesto" class="qa-btn">💰 Actualizar Datos Presupuestales</button>
+              <button class="qa-btn" data-tab="proyectos">🏗️ Actualizar Estado de Proyectos</button>
+              <button class="qa-btn orange" data-tab="propuestas" class="qa-btn orange">💡 Revisar 4 Propuestas Pendientes</button>
+              <button class="qa-btn red" data-tab="quejas" class="qa-btn red">🚨 Asignar Quejas Urgentes (2)</button>
+              <button class="qa-btn" data-tab="promesas" class="qa-btn">✅ Actualizar Promesas de Gestión</button>
             </div>
           </div>
         </div>
@@ -185,7 +210,7 @@
               <select class="af-select"><option>2026</option><option>2025</option></select>
             </div>
           </div>
-          <button class="af-submit" onclick="alert('Datos actualizados. Los cambios se reflejan en el sitio público.')">💾 Guardar y Publicar</button>
+          <button class="af-submit" class="af-submit">💾 Guardar y Publicar</button>
         </div>
       </div>
 
@@ -196,7 +221,7 @@
             <h1 class="tab-title">Gestión de Proyectos</h1>
             <p class="tab-sub">Actualiza estado, fotos y ficha técnica de cada proyecto.</p>
           </div>
-          <button class="btn-add" onclick="alert('Formulario de nuevo proyecto')">+ Nuevo Proyecto</button>
+          <button class="btn-add" class="btn-add">+ Nuevo Proyecto</button>
         </div>
 
         <div class="admin-card">
@@ -264,8 +289,8 @@
           <table class="admin-table">
             <thead><tr><th>Tipo</th><th>Ciudadano</th><th>Fecha</th><th>Estado Pago</th><th>Acción</th></tr></thead>
             <tbody>
-              <tr><td>Paz y Salvo</td><td>J. Martínez (8-724-321)</td><td>11 mar 2026</td><td><span class="estado-badge green">Pagado</span></td><td><button class="tbtn" onclick="alert('Documento generado')">Generar Doc</button></td></tr>
-              <tr><td>Licencia Comercial</td><td>R. González (4-112-567)</td><td>10 mar 2026</td><td><span class="estado-badge orange">Pendiente</span></td><td><button class="tbtn" onclick="alert('Verificando pago...')">Verificar</button></td></tr>
+              <tr><td>Paz y Salvo</td><td>J. Martínez (8-724-321)</td><td>11 mar 2026</td><td><span class="estado-badge green">Pagado</span></td><td><button class="tbtn">Generar Doc</button></td></tr>
+              <tr><td>Licencia Comercial</td><td>R. González (4-112-567)</td><td>10 mar 2026</td><td><span class="estado-badge orange">Pendiente</span></td><td><button class="tbtn">Verificar</button></td></tr>
               <tr><td>Permiso Construcción</td><td>M. Ábrego (8-803-999)</td><td>9 mar 2026</td><td><span class="estado-badge green">Pagado</span></td><td><button class="tbtn">Aprobar</button></td></tr>
             </tbody>
           </table>
@@ -280,7 +305,7 @@
         </div>
         <div class="admin-card">
           <div class="promesas-admin-list" id="promesasAdminList"></div>
-          <button class="af-submit" style="margin-top:1.5rem" onclick="alert('Cambios guardados y publicados en el sitio.')">💾 Guardar y Publicar Cambios</button>
+          <button class="af-submit" style="margin-top:1.5rem">💾 Guardar y Publicar Cambios</button>
         </div>
       </div>
 
@@ -291,7 +316,7 @@
             <h1 class="tab-title">Usuarios Administrativos</h1>
             <p class="tab-sub">Gestiona el acceso de funcionarios al panel.</p>
           </div>
-          <button class="btn-add" onclick="alert('Formulario de nuevo usuario')">+ Nuevo Usuario</button>
+          <button class="btn-add">+ Nuevo Usuario</button>
         </div>
         <div class="admin-card">
           <table class="admin-table">
@@ -384,8 +409,8 @@
           <td>${p.monto}</td>
           <td>${p.empresa}</td>
           <td>
-            <button class="tbtn" onclick="alert('Editando: ${p.nombre}')">✏️ Editar</button>
-            <button class="tbtn" onclick="alert('Subir fotos para: ${p.nombre}')">📸 Fotos</button>
+            <button class="tbtn">✏️ Editar</button>
+            <button class="tbtn">📸 Fotos</button>
           </td>
         </tr>
       `).join('');
@@ -418,7 +443,7 @@
             </select>
           </td>
           <td>
-            <button class="tbtn" onclick="alert('Estado actualizado para ${q.codigo}')">Actualizar</button>
+            <button class="tbtn">Actualizar</button>
           </td>
         </tr>
       `).join('');
@@ -444,9 +469,9 @@
             <span class="estado-badge ${p.estado === 'aprobada' ? 'green' : 'orange'}">${p.estado === 'aprobada' ? '✔ Aprobada' : '⏳ Pendiente'}</span>
           </div>
           <div class="pac-actions">
-            <button class="tbtn green" onclick="aprobarPropuesta('${p.id}')">✅ Aprobar para Agenda</button>
-            <button class="tbtn" onclick="alert('Solicitar más info sobre: ${p.nombre}')">📝 Pedir información</button>
-            <button class="tbtn red" onclick="alert('Rechazada: ${p.nombre}')">✕ Rechazar</button>
+            <button class="tbtn green">✅ Aprobar para Agenda</button>
+            <button class="tbtn">📝 Pedir información</button>
+            <button class="tbtn red">✕ Rechazar</button>
           </div>
         </div>
       `).join('');
@@ -492,6 +517,7 @@
       `).join('');
     }
   </script>
+  <script src="../js/seguridad.js"></script>
   <script src="js/admin.js"></script>
 </body>
 </html>
