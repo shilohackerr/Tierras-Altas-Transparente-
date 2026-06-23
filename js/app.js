@@ -40,6 +40,12 @@ const ICONS = {
   arrow:    `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`,
 };
 
+function clampPct(value) {
+  const pct = Number(value);
+  if (!Number.isFinite(pct)) return 0;
+  return Math.min(100, Math.max(0, pct));
+}
+
 const INCIDENCIA_ICONS = {
   luminaria: ICONS.light,
   bache:     ICONS.road,
@@ -225,20 +231,23 @@ function renderProgressBars() {
   const container = document.getElementById('progressSection');
   if (!container) return;
   const progIcons = ['money','spending','sync','bank','progress'];
-  container.innerHTML = PRESUPUESTO.todos.rubros.map((r, i) => `
+  container.innerHTML = PRESUPUESTO.todos.rubros.map((r, i) => {
+    const pct = clampPct(r.pct);
+    return `
     <div class="progress-item" role="listitem">
       <div class="progress-meta">
         <span class="progress-name">
           <span style="color:${r.color};width:16px;height:16px;display:inline-block" aria-hidden="true">${ICONS[progIcons[i % progIcons.length]]}</span>
           ${r.nombre}
         </span>
-        <span class="progress-pct" style="color:${r.color}">${r.pct}%</span>
+        <span class="progress-pct" style="color:${r.color}">${pct}%</span>
       </div>
-      <div class="progress-bar-bg" role="progressbar" aria-valuenow="${r.pct}" aria-valuemin="0" aria-valuemax="100" aria-label="${r.nombre}: ${r.pct}%">
-        <div class="progress-bar-fill" style="width:${r.pct}%; background-color:${r.color}; background:${r.color};"></div>
+      <div class="progress-bar-bg" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" aria-label="${r.nombre}: ${pct}%">
+        <div class="progress-bar-fill" style="width:${pct}%; background-color:${r.color}; background:${r.color};"></div>
       </div>
     </div>
-  `).join('');
+  `;
+  }).join('');
 }
 
 function renderDocs() {
@@ -482,7 +491,7 @@ function renderVotaciones() {
   const container = document.getElementById('votoCards');
   if (!container) return;
   container.innerHTML = PROPUESTAS_ACTIVAS.map(p => {
-    const pct = Math.round((p.votos / p.maxVotos) * 100);
+    const pct = clampPct(Math.round((p.votos / p.maxVotos) * 100));
     return `
       <div class="voto-card" role="listitem">
         <div class="voto-header">
@@ -540,7 +549,7 @@ function toggleVoto(id, currentVotes) {
   const barFill   = card?.querySelector('.voto-bar-fill');
   if (countEl) countEl.textContent = propuesta.votos.toLocaleString('es-PA');
   if (barFill) {
-    const pct = Math.min(100, Math.round((propuesta.votos / propuesta.maxVotos) * 100));
+    const pct = clampPct(Math.round((propuesta.votos / propuesta.maxVotos) * 100));
     barFill.style.width = `${pct}%`;
   }
 
@@ -942,21 +951,24 @@ function renderPromesas() {
   if (!container) return;
   const estadoLabel  = { cumplida:'Cumplida', proceso:'En Proceso', pendiente:'Pendiente' };
   const estadoIcon   = { cumplida:ICONS.check, proceso:ICONS.process, pendiente:ICONS.pending };
-  container.innerHTML = PROMESAS.map(p => `
-    <div class="promesa-card" role="listitem" aria-label="${p.texto} — ${p.estado}, ${p.pct}%">
+  container.innerHTML = PROMESAS.map(p => {
+    const pct = clampPct(p.pct);
+    return `
+    <div class="promesa-card" role="listitem" aria-label="${p.texto} — ${p.estado}, ${pct}%">
       <div class="promesa-estado ${p.estado}">
         <span style="width:12px;height:12px;display:inline-block" aria-hidden="true">${estadoIcon[p.estado]}</span>
         ${estadoLabel[p.estado]}
       </div>
       <div class="promesa-texto">${p.texto}</div>
       <div class="promesa-avance">
-        <div class="promesa-bar-bg" role="progressbar" aria-valuenow="${p.pct}" aria-valuemin="0" aria-valuemax="100">
-          <div class="promesa-bar-fill ${p.estado}" style="width:${p.pct}%;"></div>
+        <div class="promesa-bar-bg" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100">
+          <div class="promesa-bar-fill ${p.estado}" style="width:${pct}%;"></div>
         </div>
-        <div class="promesa-pct">${p.pct}%</div>
+        <div class="promesa-pct">${pct}%</div>
       </div>
     </div>
-  `).join('');
+  `;
+  }).join('');
 
   // Renderizar referencias SIAFPA después de las promesas
   renderSIAFPA();
